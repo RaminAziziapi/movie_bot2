@@ -171,4 +171,16 @@ def get_users_count() -> int:
     try:
         with conn.cursor() as cur:
             cur.execute("SELECT COUNT(*) FROM users;")
-            return cur.fe
+            return cur.fetchone()[0]
+    finally:
+        put_connection(conn)
+
+
+def get_movies_count() -> int:
+    conn = get_connection()
+    try:
+        with conn.cursor() as cur:
+            cur.execute("SELECT COUNT(*) FROM movies;")
+            return cur.fetchone()[0]
+    finally:
+        put_connection(conn)
