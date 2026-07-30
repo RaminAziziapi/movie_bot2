@@ -50,4 +50,13 @@ async def _delete_video_later(context, chat_id: int, message_id: int) -> None:
     try:
         await context.bot.delete_message(chat_id=chat_id, message_id=message_id)
     except TelegramError as exc:
-        logger.
+        logger.warning("خطا در حذف پیام ویدیو: %s", exc)
+        return
+
+    try:
+        await context.bot.send_message(
+            chat_id=chat_id,
+            text="🗑 ویدیو حذف شد. برای دریافت مجدد از لینک اختصاصی استفاده کنید.",
+        )
+    except TelegramError as exc:
+        logger.warning("خطا در ارسال پیام اطلاع‌رسانی: %s", exc)
