@@ -15,7 +15,7 @@ async def send_movie_to_user(chat_id: int, context, movie_id: str) -> None:
         await context.bot.send_message(chat_id=chat_id, text="❗️ فیلم مورد نظر پیدا نشد.")
         return
 
-    _, name, season, episode, file_id, _poster_file_id = movie
+    _, name, season, episode, file_id = movie
     caption = f"🎬 {name}\n📁 فصل {season} | قسمت {episode}\n\n⚠️ این ویدیو تا {AUTO_DELETE_SECONDS} ثانیه دیگر حذف می‌شود."
     await _send_and_schedule_delete(chat_id, context, file_id, caption)
 
