@@ -37,6 +37,7 @@ def main() -> None:
 
     # --- دستورات پایه ---
     application.add_handler(CommandHandler("start", sh.start))
+application.add_handler(CommandHandler("tmdb", mh.test_tmdb))
     application.add_handler(CommandHandler("admin", sh.admin_command))
 
     # --- مکالمات (Conversation Handlers) ---
