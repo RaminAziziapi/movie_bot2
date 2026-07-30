@@ -5,6 +5,7 @@ def main_panel_keyboard(user_id, can_manage_admins_flag, can_settings_flag, can_
     keyboard = [
         [InlineKeyboardButton("🎬 مدیریت فیلم", callback_data="menu_movies")],
         [InlineKeyboardButton("📺 مدیریت سریال", callback_data="menu_series")],
+        [InlineKeyboardButton("🔍 افزودن با TMDB", callback_data="tmdb_start")],
         [InlineKeyboardButton("👥 مدیریت کاربران", callback_data="menu_users")],
     ]
     if can_manage_admins_flag:
@@ -104,4 +105,18 @@ def build_join_keyboard(channels) -> InlineKeyboardMarkup:
             [InlineKeyboardButton(f"📢 عضویت در {channel}", url=f"https://t.me/{channel_username}")]
         )
     keyboard.append([InlineKeyboardButton("✅ عضو شدم", callback_data="check_membership")])
+    return InlineKeyboardMarkup(keyboard)
+
+
+def tmdb_preview_keyboard() -> InlineKeyboardMarkup:
+    keyboard = [
+        [
+            InlineKeyboardButton("✅ تأیید و ذخیره", callback_data="tmdb_confirm"),
+            InlineKeyboardButton("✏️ ویرایش", callback_data="tmdb_edit"),
+        ],
+        [
+            InlineKeyboardButton("🔄 جستجوی دوباره", callback_data="tmdb_research"),
+            InlineKeyboardButton("❌ لغو", callback_data="tmdb_cancel"),
+        ],
+    ]
     return InlineKeyboardMarkup(keyboard)

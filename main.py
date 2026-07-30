@@ -15,6 +15,7 @@ import broadcast_handlers as bh
 import requests_handlers as rh
 import settings_handlers as seth
 import stats_handlers as sth
+import content_handlers as ch
 
 logging.basicConfig(
     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
@@ -54,6 +55,7 @@ def main() -> None:
     application.add_handler(seth.setting_rules_text_conv)
     application.add_handler(seth.setting_support_link_conv)
     application.add_handler(seth.settings_restore_conv)
+    application.add_handler(ch.tmdb_conv)
 
     # --- ناوبری پنل ---
     application.add_handler(CallbackQueryHandler(sh.back_to_panel, pattern="^back_to_panel$"))

@@ -22,3 +22,8 @@ ROLE_LABELS = {
 }
 
 AUTO_DELETE_SECONDS = 60
+
+# --- سرویس‌های خارجی (قابلیت جستجوی TMDB و پردازش متن با Gemini) ---
+TMDB_API_KEY = os.environ.get("TMDB_API_KEY")
+GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY")
+TMDB_IMAGE_BASE = "https://image.tmdb.org/t/p/w500"
