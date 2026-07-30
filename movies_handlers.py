@@ -9,54 +9,12 @@ from telegram.ext import (
 )
 
 import database as db
-from tmdb_service import search_movie
 import keyboards as kb
 import utils
 from start_handlers import back_to_panel, send_panel
 
 ADD_MOVIE_VIDEO, ADD_MOVIE_NAME, ADD_MOVIE_SEASON, ADD_MOVIE_EPISODE = range(4)
 DELETE_MOVIE_ID = 10
-# ---------------------- تست TMDB ----------------------
-
-async def test_tmdb(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    if not utils.can_manage_content(update.effective_user.id):
-        return
-
-    if not context.args:
-        await update.message.reply_text(
-            "❗️ مثال:\n/tmdb Interstellar"
-        )
-        return
-
-    name = " ".join(context.args)
-
-    try:
-        movie = search_movie(name)
-
-        if not movie:
-            await update.message.reply_text(
-                "❌ نتیجه‌ای پیدا نشد."
-            )
-            return
-
-        text = (
-            f"🎬 {movie.get('title')}\n\n"
-            f"🌍 عنوان اصلی: {movie.get('original_title')}\n"
-            f"📅 سال ساخت: {movie.get('year')}\n"
-            f"⭐ امتیاز: {movie.get('rating')}\n"
-            f"🎭 ژانر: {movie.get('genre')}\n"
-            f"🌎 کشور: {movie.get('country')}\n"
-            f"🎬 کارگردان: {movie.get('director')}\n"
-            f"👥 بازیگران: {movie.get('actors')}\n\n"
-            f"📝 خلاصه:\n{movie.get('description')}"
-        )
-
-        await update.message.reply_text(text)
-
-    except Exception as e:
-        await update.message.reply_text(
-            f"❌ خطا:\n{str(e)}"
-        )
 
 
 async def menu_movies(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
