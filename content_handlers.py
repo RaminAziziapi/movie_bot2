@@ -64,12 +64,20 @@ async def _show_preview(chat_id: int, context: ContextTypes.DEFAULT_TYPE) -> Non
     text = _format_preview(d)
     keyboard = kb.tmdb_preview_keyboard()
 
+    TELEGRAM_CAPTION_LIMIT = 1024
+
     if d.get("poster_url"):
         try:
-            await context.bot.send_photo(chat_id=chat_id, photo=d["poster_url"], caption=text, reply_markup=keyboard)
+            if len(text) <= TELEGRAM_CAPTION_LIMIT:
+                await context.bot.send_photo(chat_id=chat_id, photo=d["poster_url"], caption=text, reply_markup=keyboard)
+            else:
+                # کپشن جا نمی‌شه: اول فقط عکس، بعد کل متن رو جدا با دکمه‌ها بفرست
+                title_line = d.get("title") or ""
+                await context.bot.send_photo(chat_id=chat_id, photo=d["poster_url"], caption=title_line[:TELEGRAM_CAPTION_LIMIT])
+                await context.bot.send_message(chat_id=chat_id, text=text, reply_markup=keyboard)
             return
         except TelegramError:
-            pass  # اگه عکس مشکل داشت، حداقل متن رو بفرست
+            pass  # اگه لینک عکس مشکل داشت، حداقل متن رو بفرست
 
     await context.bot.send_message(chat_id=chat_id, text=text, reply_markup=keyboard)
 
