@@ -17,12 +17,14 @@ ADD_MOVIE_VIDEO, ADD_MOVIE_NAME, ADD_MOVIE_SEASON, ADD_MOVIE_EPISODE = range(4)
 DELETE_MOVIE_ID = 10
 
 
-async def menu_movies(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+async def menu_movies(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     query = update.callback_query
     await query.answer()
     if not utils.can_manage_content(query.from_user.id):
-        return
+        return ConversationHandler.END
+
     await query.edit_message_text("🎬 مدیریت فیلم", reply_markup=kb.movies_menu_keyboard())
+    return ConversationHandler.END
 
 
 # ---------------------- افزودن فیلم ----------------------
