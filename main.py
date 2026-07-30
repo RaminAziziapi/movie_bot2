@@ -34,8 +34,9 @@ def main() -> None:
     db.create_tables()
 
     application = Application.builder().token(BOT_TOKEN).build()
-# --- دستورات پایه --- application.add_handler(CommandHandler("start", sh.start))
-application.add_handler(CommandHandler("tmdb", mh.test_tmdb))
+
+    # --- دستورات پایه ---
+    application.add_handler(CommandHandler("start", sh.start))
     application.add_handler(CommandHandler("admin", sh.admin_command))
 
     # --- مکالمات (Conversation Handlers) ---
