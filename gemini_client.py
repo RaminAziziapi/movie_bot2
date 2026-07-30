@@ -2,7 +2,7 @@ import httpx
 
 from config import GEMINI_API_KEY
 
-GEMINI_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent"
+GEMINI_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent"
 
 
 async def process_with_gemini(data: dict) -> dict:
@@ -22,7 +22,10 @@ async def process_with_gemini(data: dict) -> dict:
         async with httpx.AsyncClient(timeout=30) as client:
             resp = await client.post(
                 GEMINI_URL,
-                params={"key": GEMINI_API_KEY},
+                headers={
+                    "x-goog-api-key": GEMINI_API_KEY,
+                    "Content-Type": "application/json",
+                },
                 json={"contents": [{"parts": [{"text": prompt}]}]},
             )
             resp.raise_for_status()
